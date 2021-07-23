@@ -1,4 +1,4 @@
-package yetmorecode.format.lx;
+package yetmorecode.file.format.lx;
 
 /**
  * LX Executable Object Table Entry<br>

@@ -1,4 +1,4 @@
-package yetmorecode.format.lx;
+package yetmorecode.file.format.lx;
 
 import java.util.ArrayList;
 

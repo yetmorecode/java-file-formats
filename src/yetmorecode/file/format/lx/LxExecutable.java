@@ -1,8 +1,8 @@
-package yetmorecode.format.lx;
+package yetmorecode.file.format.lx;
 
 import java.util.ArrayList;
 
-import yetmorecode.format.mz.MzHeader;
+import yetmorecode.file.format.mz.MzHeader;
 
 public class LxExecutable {
 	/**

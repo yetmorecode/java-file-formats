@@ -1,4 +1,8 @@
-package yetmorecode.format.mz;
+package yetmorecode.file.format.mz;
+
+import java.io.IOException;
+
+import yetmorecode.file.BinaryFileInputStream;
 
 /**
  * MS-DOS MZ header<br>
@@ -148,4 +152,30 @@ public class MzHeader {
      * DOS-stub bytes
      */
 	public byte [] stubBytes;
+	
+	public static MzHeader fromStream(BinaryFileInputStream input, long offset) throws IOException {
+		var header = new MzHeader();
+		var old = input.position(offset);
+		header.signature = input.readShort();
+		header.bytesOnLastBlock = input.readShort();
+		header.blockCount = input.readShort();
+		header.relocations = input.readShort();
+		header.headerSize = input.readShort();
+		header.minExtraParagraphs = input.readShort();
+		header.maxExtraParagraphs = input.readShort();
+		header.ss = input.readShort();
+		header.sp = input.readShort();
+		header.checksum = input.readShort();
+		header.ip = input.readShort();
+		header.cs = input.readShort();
+		header.relocationTableOffset = input.readShort();
+		header.overlayNumber = input.readShort();
+		input.skip(8);
+		header.oemId = input.readShort();
+		header.oemInfo = input.readShort();
+		input.skip(20);
+		header.fileAddressNewExe = input.readInt();
+		input.position(old);
+		return header;
+	}
 }

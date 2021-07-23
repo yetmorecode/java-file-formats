@@ -1,4 +1,4 @@
-package yetmorecode.format.exception;
+package yetmorecode.file.exception;
 
 /**
  * An exception class to handle encountering

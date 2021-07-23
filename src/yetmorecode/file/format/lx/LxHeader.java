@@ -1,4 +1,4 @@
-package yetmorecode.format.lx;
+package yetmorecode.file.format.lx;
 
 /**
  * LX/LE/LC executable module header

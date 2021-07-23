@@ -1,4 +1,4 @@
-package yetmorecode.format.lx;
+package yetmorecode.file.format.lx;
 
 /**
  * The Object page table provides information about a logical page in an object. 

@@ -1,4 +1,4 @@
-package yetmorecode.format.mz;
+package yetmorecode.file.format.mz;
 
 import java.util.ArrayList;
 

@@ -1,4 +1,4 @@
-package yetmorecode.format.lx;
+package yetmorecode.file.format.lx;
 
 public interface ObjectPageTableEntry {
 	public int getOffset();
