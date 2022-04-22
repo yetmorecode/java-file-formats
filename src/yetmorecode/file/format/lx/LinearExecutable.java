@@ -1,10 +1,11 @@
 package yetmorecode.file.format.lx;
 
 import java.util.ArrayList;
+import java.util.HashMap;
 
 import yetmorecode.file.format.mz.MzHeader;
 
-public class LxExecutable {
+public class LinearExecutable {
 	/**
 	 * Old-style MS-DOS header (optional)
 	 */
@@ -13,22 +14,29 @@ public class LxExecutable {
 	/**
 	 * LX/LE/LC header
 	 */
-	public LxHeader header = new LxHeader();
+	public LinearHeader header = new LinearHeader();
 	
 	/**
 	 * Object table
 	 */
-	public ArrayList<ObjectTableEntry> objectTable = new ArrayList<>();
+	public ArrayList<LinearObjectTableEntry> objects = new ArrayList<>();
 	
 	/**
 	 * The object page table (mapping page numbers to file offsets)
 	 */
-	public ArrayList<ObjectPageTableEntry> objectPageTable = new ArrayList<>();
+	public ArrayList<LinearPageTableEntry> pageRecords = new ArrayList<>();
+	
+	/**
+	 * The fixup page table
+	 */
+	public long[] fixupTable;
 	
 	/**
 	 * The fixup record table
 	 */
-	public ArrayList<ArrayList<LxFixupRecord>> fixupRecordTable = new ArrayList<>();
+    public HashMap<Integer, ArrayList<LinearFixupRecord>> fixups = new HashMap<>();
+    
+    public int fixupCount;
 	
 	/**
 	 * The actual data pages

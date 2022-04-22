@@ -82,7 +82,7 @@ import java.util.ArrayList;
  * @author https://github.com/yetmorecode
  *
  */
-public class LxFixupRecord {
+public class LinearFixupRecord {
 	/**
 	 * 0Fh = Source mask
 	 */
@@ -387,7 +387,7 @@ public class LxFixupRecord {
 				size += 2;
 			}
 			break;
-		case LxFixupRecord.SOURCE_16BIT_SELECTOR_FIXUP:
+		case LinearFixupRecord.SOURCE_16BIT_SELECTOR_FIXUP:
 			if ((targetFlags & TARGET_16BIT_OBJECT) > 0) {
 				size += 2;
 			} else {
@@ -402,5 +402,29 @@ public class LxFixupRecord {
 			size += 2 * sourceOffset;
 		}
 		return size;
+	}
+	
+	public boolean hasSourceList() {
+		return (sourceType & SOURCE_SOURCE_LIST) > 0;
+	}
+	
+	public boolean objectNumber16Bit() {
+		return (targetFlags & 0x40) > 0;
+	}
+	
+	public boolean isInternalTarget() {
+		return (targetFlags & 0x3) == 0;
+	}
+	
+	public int getSourceType() {
+		return sourceType & SOURCE_MASK;
+	}
+	
+	public boolean isTargetOffset32Bit() {
+		return (targetFlags & 0x10) > 0;
+	}
+	
+	public boolean is1616PointerFixup() {
+		return getSourceType() == SOURCE_1616PTR_FIXUP;
 	}
 }

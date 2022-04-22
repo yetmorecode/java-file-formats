@@ -165,7 +165,7 @@ package yetmorecode.file.format.lx;
  *           
  * @author https://github.com/yetmorecode
  */
-public class LxHeader {
+public class LinearHeader {
 	public final static int SIZE = 0xb0;
 	
 	/**
@@ -366,6 +366,11 @@ public class LxHeader {
 	 *   invalid.
 	 */
 	public int moduleFlags;
+	public final static int MODULE_PHY_DEVICE_DRIVER = 0x20000;
+	public final static int MODULE_VIR_DEVICE_DRIVER = 0x28000;
+	public final static int MODULE_VXD = 0x38000;
+	public final static int MODULE_LIBRARY = 0x8000;
+	public final static int MODULE_TYPE_MASK = 0x38000;
 	
 	/**
 	 * MODULE # PAGES = DD Physical number of pages in module.
@@ -694,6 +699,27 @@ public class LxHeader {
 	 */
 	public int stackSize;
 	
+	public byte[] res3;
+    /* Pad structure to 192 bytes */
+	public long winresoff ;
+	public long winreslen ;
+	public short Dev386_Device_ID;
+    /* Device ID for VxD */
+	public short Dev386_DDK_Version;
+    /* DDK version for VxD */
+	
 
-	public LxHeader() {}
+	public LinearHeader() {}
+	
+	public boolean isLe() {
+		return signature == SIGNATURE_LE;
+	}
+	
+	public boolean isLx() {
+		return signature == SIGNATURE_LX;
+	}
+	
+	public boolean isLc() {
+		return signature == SIGNATURE_LC;
+	}
 }

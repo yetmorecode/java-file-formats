@@ -17,7 +17,7 @@ package yetmorecode.file.format.lx;
  *   
  * @author https://github.com/yetmorecode
  */
-public class ObjectTableEntry {
+public class LinearObjectTableEntry {
 	/**
 	 * Size of an object table entry
 	 */
@@ -203,5 +203,7 @@ public class ObjectTableEntry {
 	 * additional pages are treated as zero filled pages.
 	 */
 	public int pageCount;
+	
+	public int reserved;
 	
 }

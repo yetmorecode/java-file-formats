@@ -1,36 +1,17 @@
 package yetmorecode.file.format.lx;
 
-/**
- * The Object page table provides information about a logical page in an object. 
- * 
- * A logical page may be an enumerated page, a pseudo page or an iterated page. 
- * The structure of the object page table in conjunction with the structure of the object table 
- * allows for efficient access of a page when a page fault occurs, while still allowing the 
- * physical page data to be located in the preload page, demand load page or 
- * iterated data page sections in the linear EXE module. 
- * 
- * The logical page entries in the Object Page Table are numbered starting from one. 
- * 
- * The Object Page Table is parallel to the Fixup Page Table as they are both indexed by the logical page number.
- * 
- * Each Object Page Table entry has the following format:
- * 
- *    32                                  8 7          0
- *     +-----+-----+-----+-----+-----+-----+-----+-----+
- * 00h |             PAGE NUMBER           |   FLAGS   |
- *     +-----+-----+-----+-----+-----+-----+-----+-----+
- *     
- * @author https://github.com/yetmorecode
- *
- */
-public class LeObjectPageTableEntry implements ObjectPageTableEntry {
+public class LinearPageTableEntry {	
+	public int dataOffset;
+	public short dataSize;
+	public short flags;	
+	public int index;
+
+	public int getIndex() {
+		return index;
+	}
+		
 	/**
-	 * Size of an LE object page table entry
-	 */
-	public final static int SIZE = 0x4;
-	
-	/**
-	 * PAGE Number = 24bit Offset to the page data in the EXE file.
+	 * PAGE DATA OFFSET = DD Offset to the page data in the EXE file.
 	 * 
 	 * This field, when bit shifted left by the PAGE OFFSET SHIFT from the module header,
 	 * specifies the offset from the beginning of the Preload Page section of the physical
@@ -52,7 +33,23 @@ public class LeObjectPageTableEntry implements ObjectPageTableEntry {
 	 * Table to find any fixups associated with the logical page.
 	 * 
 	 */
-	public int dataOffset;
+	public int getOffset() {
+		return dataOffset;
+	}
+	
+	/**
+	 * DATA SIZE = DW Number of bytes of data for this page.
+	 * 
+	 * This field specifies the actual number of bytes that represent the page in the file. If
+	 * the PAGE SIZE field from the module header is greater than the value of this field
+	 * and the FLAGS field indicates a Legal Physical Page, the remaining bytes are to be
+	 * filled with zeros. If the FLAGS field indicates an Iterated Data Page, the iterated data
+	 * records will completely fill out the remainder.
+	 * 
+	 */
+	public short getSize() {
+		return dataSize;
+	}
 	
 	/**
 	 * 00h = Legal Physical Page in the module (Offset from Preload Page Section).
@@ -95,25 +92,8 @@ public class LeObjectPageTableEntry implements ObjectPageTableEntry {
 	 * 04h = Range of Pages.
 	 * 05h = Compressed Page (Offset from Preload Pages Section).
 	 */
-	public byte flags;
-
-	@Override
-	public int getOffset() {
-		return dataOffset;
-	}
-
-	@Override
-	public short getSize() {
-		return 0;
-	}
-
-	@Override
+	
 	public short getFlags() {
-		// Prevent java sign extension issues
-		if (flags < 0) {
-			return (short) (flags + 0x100);
-		}
 		return flags;
 	}
-
 }
